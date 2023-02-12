@@ -4,6 +4,7 @@ import (
 	"os"
 
 	"github.com/aws/aws-sdk-go/aws"
+	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/guregu/dynamo"
 )
@@ -20,15 +21,19 @@ func NewDynamoDBClient() (*dynamo.DB, error) {
 	dynamoDbEndpoint := os.Getenv("DYNAMO_ENDPOINT")
 
 	disableSsl := false
-	if len(dynamoDbEndpoint) != 0 {
-		disableSsl = true
-	}
-
-	sess, err := session.NewSession(&aws.Config{
+	conf := &aws.Config{
 		Region:     aws.String(dynamoDbRegion),
 		Endpoint:   aws.String(dynamoDbEndpoint),
 		DisableSSL: aws.Bool(disableSsl),
-	})
+	}
+
+	if len(dynamoDbEndpoint) != 0 {
+		disableSsl = true
+	} else {
+		conf.Credentials = credentials.NewStaticCredentials("dummy", "dummy", "dummy")
+	}
+
+	sess, err := session.NewSession(conf)
 	if err != nil {
 		return nil, err
 	}
