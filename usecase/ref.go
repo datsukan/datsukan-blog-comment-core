@@ -1,8 +1,6 @@
 package usecase
 
 import (
-	"fmt"
-
 	"github.com/datsukan/datsukan-blog-comment-core/model"
 	"github.com/datsukan/datsukan-blog-comment-core/pkg"
 	"github.com/datsukan/datsukan-blog-comment-core/repo"
@@ -68,6 +66,5 @@ func Ref(articleID string) ([]*Comment, error) {
 		}
 	}
 
-	fmt.Println(rcs)
 	return rcs, nil
 }
