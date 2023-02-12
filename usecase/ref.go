@@ -30,8 +30,8 @@ func Ref(articleID string) ([]*Comment, error) {
 		return nil, err
 	}
 
-	var rcs []*Comment
-	var ccs []*model.Comment
+	rcs := []*Comment{}
+	ccs := []*model.Comment{}
 	for _, c := range comments {
 		if c.ParentID != "" {
 			ccs = append(ccs, c)
@@ -46,6 +46,7 @@ func Ref(articleID string) ([]*Comment, error) {
 			Content:   c.Content,
 			CreatedAt: c.CreatedAt,
 		}
+		rc.ReplyComments = []*Comment{}
 		rcs = append(rcs, rc)
 	}
 
