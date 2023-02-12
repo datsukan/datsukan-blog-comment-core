@@ -18,14 +18,14 @@ func NewDynamoDBClient() (*dynamo.DB, error) {
 	}
 
 	// DynamoDB Local を利用する場合は Endpoint の URL を設定する。
-	dynamoDbEndpoint := os.Getenv("DYNAMO_ENDPOINT")
 	conf := &aws.Config{
-		Region:   aws.String(dynamoDbRegion),
-		Endpoint: aws.String(dynamoDbEndpoint),
+		Region: aws.String(dynamoDbRegion),
 	}
 
+	dynamoDbEndpoint := os.Getenv("DYNAMO_ENDPOINT")
 	isLocal := len(dynamoDbEndpoint) != 0
 	if isLocal {
+		conf.Endpoint = aws.String(dynamoDbEndpoint)
 		conf.DisableSSL = aws.Bool(true)
 		conf.Credentials = credentials.NewStaticCredentials("dummy", "dummy", "dummy")
 	}
