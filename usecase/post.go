@@ -9,6 +9,7 @@ import (
 	"github.com/datsukan/datsukan-blog-comment-core/repoif"
 )
 
+// Post は、指定された内容でコメントを登録する。
 func Post(articleID string, parentID string, userName string, content string) (*model.Comment, error) {
 	db, err := pkg.NewDynamoDBClient()
 	if err != nil {
