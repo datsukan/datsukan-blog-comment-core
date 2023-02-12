@@ -24,7 +24,7 @@ func NewCommentRepository(db *dynamo.DB) *CommentRepository {
 // ReadByArticleID は、記事に紐づくコメントの一覧を取得する。
 func (r *CommentRepository) ReadByArticleID(articleID string) ([]*model.Comment, error) {
 	var cs []*model.Comment
-	err := r.Table.Scan().Filter("'ArticleID' = ?", articleID).All(&cs)
+	err := r.Table.Get("ArticleID", articleID).All(&cs)
 	if err != nil {
 		fmt.Printf("Failed to get item[%v]\n", err)
 		return nil, err
@@ -36,7 +36,7 @@ func (r *CommentRepository) ReadByArticleID(articleID string) ([]*model.Comment,
 // ReadByParentID は、返信元コメントに紐づくコメントの一覧を取得する。
 func (r *CommentRepository) ReadByParentID(parentID string) ([]*model.Comment, error) {
 	var cs []*model.Comment
-	err := r.Table.Scan().Filter("'ParentID' = ?", parentID).All(&cs)
+	err := r.Table.Get("ParentID", parentID).All(&cs)
 	if err != nil {
 		fmt.Printf("Failed to get item[%v]\n", err)
 		return nil, err
