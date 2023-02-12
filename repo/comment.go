@@ -9,7 +9,7 @@ import (
 	"github.com/guregu/dynamo"
 )
 
-const timeformat = "2006-01-02 15:04:05"
+const timeformat = "2006-01-02 15:04:05.000000000"
 
 // CommentRepository は、DynamoDB 用の DB の構造体。
 type CommentRepository struct {
