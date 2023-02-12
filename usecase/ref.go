@@ -17,6 +17,7 @@ type Comment struct {
 	ReplyComments []*Comment
 }
 
+// Ref は、指定された記事に紐づくコメントのリストを取得する。
 func Ref(articleID string) ([]*Comment, error) {
 	db, err := pkg.NewDynamoDBClient()
 	if err != nil {
