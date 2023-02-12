@@ -14,7 +14,16 @@ type Comment struct {
 	UserName      string
 	Content       string
 	CreatedAt     string
-	ReplyComments []*Comment
+	ReplyComments []*ReplyComment
+}
+
+type ReplyComment struct {
+	ID        string
+	ArticleID string
+	ParentID  string
+	UserName  string
+	Content   string
+	CreatedAt string
 }
 
 // Ref は、指定された記事に紐づくコメントのリストを取得する。
@@ -39,20 +48,21 @@ func Ref(articleID string) ([]*Comment, error) {
 			continue
 		}
 
+		reply := []*ReplyComment{}
 		rc := &Comment{
-			ID:        c.ID,
-			ArticleID: c.ArticleID,
-			ParentID:  c.ParentID,
-			UserName:  c.UserName,
-			Content:   c.Content,
-			CreatedAt: c.CreatedAt,
+			ID:            c.ID,
+			ArticleID:     c.ArticleID,
+			ParentID:      c.ParentID,
+			UserName:      c.UserName,
+			Content:       c.Content,
+			CreatedAt:     c.CreatedAt,
+			ReplyComments: reply,
 		}
-		rc.ReplyComments = []*Comment{}
 		rcs = append(rcs, rc)
 	}
 
 	for _, c := range ccs {
-		cc := &Comment{
+		cc := &ReplyComment{
 			ID:        c.ID,
 			ArticleID: c.ArticleID,
 			ParentID:  c.ParentID,
