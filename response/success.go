@@ -7,6 +7,7 @@ import (
 // ResponseSuccess は処理成功時のレスポンスを生成する。
 func ResponseSuccess(body string) (events.APIGatewayProxyResponse, error) {
 	r := events.APIGatewayProxyResponse{
+		Headers:    Headers,
 		StatusCode: 200,
 		Body:       body,
 	}

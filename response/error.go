@@ -27,6 +27,7 @@ func ResponseBadRequestError(rerr error) (events.APIGatewayProxyResponse, error)
 	jb, err := json.Marshal(b)
 	if err != nil {
 		r := events.APIGatewayProxyResponse{
+			Headers:    Headers,
 			StatusCode: 500,
 			Body:       err.Error(),
 		}
@@ -35,6 +36,7 @@ func ResponseBadRequestError(rerr error) (events.APIGatewayProxyResponse, error)
 	body := string(jb)
 
 	r := events.APIGatewayProxyResponse{
+		Headers:    Headers,
 		StatusCode: 400,
 		Body:       body,
 	}
@@ -50,6 +52,7 @@ func ResponseInternalServerError(rerr error) (events.APIGatewayProxyResponse, er
 	jb, err := json.Marshal(b)
 	if err != nil {
 		r := events.APIGatewayProxyResponse{
+			Headers:    Headers,
 			StatusCode: 500,
 			Body:       err.Error(),
 		}
@@ -58,6 +61,7 @@ func ResponseInternalServerError(rerr error) (events.APIGatewayProxyResponse, er
 	body := string(jb)
 
 	r := events.APIGatewayProxyResponse{
+		Headers:    Headers,
 		StatusCode: 500,
 		Body:       body,
 	}
