@@ -24,19 +24,7 @@ func NewCommentRepository(db *dynamo.DB) *CommentRepository {
 // ReadByArticleID は、記事に紐づくコメントの一覧を取得する。
 func (r *CommentRepository) ReadByArticleID(articleID string) ([]*model.Comment, error) {
 	var cs []*model.Comment
-	err := r.Table.Scan().Filter("'ArticleID' = ?", articleID).All(&cs)
-	if err != nil {
-		fmt.Printf("Failed to get item[%v]\n", err)
-		return nil, err
-	}
-
-	return cs, nil
-}
-
-// ReadByParentID は、返信元コメントに紐づくコメントの一覧を取得する。
-func (r *CommentRepository) ReadByParentID(parentID string) ([]*model.Comment, error) {
-	var cs []*model.Comment
-	err := r.Table.Scan().Filter("'ParentID' = ?", parentID).All(&cs)
+	err := r.Table.Get("ArticleID", articleID).Order(dynamo.Ascending).All(&cs)
 	if err != nil {
 		fmt.Printf("Failed to get item[%v]\n", err)
 		return nil, err
@@ -62,15 +50,4 @@ func (r *CommentRepository) Create(articleID string, parentID string, userName s
 	}
 
 	return c, nil
-}
-
-// Delete は、いいね数のレコードを削除する。
-func (r *CommentRepository) Delete(id string) error {
-	err := r.Table.Delete("ID", id).Run()
-	if err != nil {
-		fmt.Printf("Failed to delete item[%v]\n", err)
-		return nil
-	}
-
-	return nil
 }
