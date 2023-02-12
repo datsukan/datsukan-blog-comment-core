@@ -12,6 +12,12 @@ type ErrorResponse struct {
 	Message string `json:"message"`
 }
 
+// ValidationErrorResponse は入力不正のレスポンスを定義した構造体
+type ValidationErrorResponse struct {
+	Field   string `json:"field"`
+	Message string `json:"message"`
+}
+
 // ResponseBadRequestError はリクエスト不正のレスポンスを生成する
 func ResponseBadRequestError(rerr error) (events.APIGatewayProxyResponse, error) {
 	b := ErrorResponse{
