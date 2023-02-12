@@ -48,27 +48,36 @@ func Ref(articleID string) ([]*Comment, error) {
 			continue
 		}
 
+		createdAt, err := pkg.Duration(repo.Timeformat, c.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
 		reply := []*ReplyComment{}
+
 		rc := &Comment{
 			ID:            c.ID,
 			ArticleID:     c.ArticleID,
 			ParentID:      c.ParentID,
 			UserName:      c.UserName,
 			Content:       c.Content,
-			CreatedAt:     c.CreatedAt,
+			CreatedAt:     createdAt,
 			ReplyComments: reply,
 		}
 		rcs = append(rcs, rc)
 	}
 
 	for _, c := range ccs {
+		createdAt, err := pkg.Duration(repo.Timeformat, c.CreatedAt)
+		if err != nil {
+			return nil, err
+		}
 		cc := &ReplyComment{
 			ID:        c.ID,
 			ArticleID: c.ArticleID,
 			ParentID:  c.ParentID,
 			UserName:  c.UserName,
 			Content:   c.Content,
-			CreatedAt: c.CreatedAt,
+			CreatedAt: createdAt,
 		}
 
 		for _, rc := range rcs {

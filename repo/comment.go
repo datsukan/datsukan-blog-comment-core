@@ -9,7 +9,7 @@ import (
 	"github.com/guregu/dynamo"
 )
 
-const timeformat = "2006-01-02 15:04:05.000000000"
+const Timeformat = "2006-01-02 15:04:05.000000000"
 
 // CommentRepository は、DynamoDB 用の DB の構造体。
 type CommentRepository struct {
@@ -41,7 +41,7 @@ func (r *CommentRepository) Create(articleID string, parentID string, userName s
 		ParentID:  parentID,
 		UserName:  userName,
 		Content:   content,
-		CreatedAt: time.Now().Format(timeformat),
+		CreatedAt: time.Now().Format(Timeformat),
 	}
 
 	if err := r.Table.Put(c).Run(); err != nil {
