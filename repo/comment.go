@@ -35,7 +35,7 @@ func (r *CommentRepository) ReadByArticleID(articleID string) ([]*model.Comment,
 
 // CountByArticleID は、記事に紐づくコメントの件数を取得する。
 func (r *CommentRepository) CountByArticleID(articleID string) (int64, error) {
-	c, err := r.Table.Get("ArticleID", articleID).Range("CreatedAt", dynamo.LessOrEqual, time.Now().Format(Timeformat)).Count()
+	c, err := r.Table.Get("ArticleID", articleID).Count()
 	if err != nil {
 		fmt.Printf("Failed to count item[%v]\n", err)
 		return 0, err
